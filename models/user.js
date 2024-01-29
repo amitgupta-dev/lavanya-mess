@@ -21,9 +21,20 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    address: {
+        longitude: {
+            type: Number,
+            required: true
+        },
+        latitude: {
+            type: Number,
+            required: true
+        }
+    },
     createdAt: {
         type: Number,
-        required: true
+        required: true,
+        default: Date.now()
     },
     updatedAt: {
         type: Number,
