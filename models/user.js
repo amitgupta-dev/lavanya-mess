@@ -21,33 +21,21 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    address: {
-        longitude: {
-            type: Number,
-            required: true
-        },
-        latitude: {
-            type: Number,
-            required: true
-        }
+    address: [String],
+    location: {
+        type: { type: String, default: 'Point' },
+        coordinates: { type: [Number], required: true } // [longitude, latitude]
     },
-    createdAt: {
-        type: Number,
-        required: true,
-        default: Date.now()
+    role: {
+        type: Strnig,
+        enum: ['admin', 'manager', 'staff', 'user']
     },
-    updatedAt: {
-        type: Number,
-        required: true
-    },
+
     isVerified: {
         type: Boolean,
         default: false
     },
-    acceptTAndC: {
-        type: Boolean,
-        default: false
-    },
+
     isAdmin: {
         type: Boolean,
         default: false
@@ -56,7 +44,11 @@ const UserSchema = new mongoose.Schema({
     forgotPasswordTokenExpiry: Number,
     verifyToken: String,
     verifyTokenExpiry: Number,
+}, {
+    timestamps: true,
 })
+
+UserSchema.index({ location: '2dsphere' });
 
 const User = mongoose.models.User || mongoose.model("User", UserSchema)
 

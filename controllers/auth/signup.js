@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken')
 const asyncHandler = require('../../utils/asyncHandler')
 
 const signup = asyncHandler(async (req, res) => {
-    let { name, email, phone, password, dob, gender, acceptTAndC } = req.body
+    let { name, role, email, phone, password, dob, gender, acceptTAndC } = req.body
 
     dob = new Date(dob).getTime()
 
@@ -30,6 +30,7 @@ const signup = asyncHandler(async (req, res) => {
         password: hashedPassword,
         dob,
         gender,
+        role,
         acceptTAndC,
         isAdmin: true,
         createdAt: Date.now(),

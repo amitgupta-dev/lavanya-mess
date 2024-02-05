@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const PaymentSchema = new mongoose.Schema({
+const SubscriptionSchema = new mongoose.Schema({
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
@@ -15,13 +15,14 @@ const PaymentSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    method: {
+    methodOfPayment: {
         type: String,
         enum: ['credit_card', 'debit_card', 'upi', 'wallet']
     },
     status: {
         type: String,
         enum: ['active', 'expired'],
+        default: 'active',
         required: true
     },
     startDate: {
@@ -53,5 +54,5 @@ const PaymentSchema = new mongoose.Schema({
     }
 })
 
-const Payment = mongoose.models.Payment || mongoose.model('Payment', PaymentSchema)
-module.exports = Payment
+const Subscription = mongoose.models.Subscription || mongoose.model('Subscription', SubscriptionSchema)
+module.exports = Subscription

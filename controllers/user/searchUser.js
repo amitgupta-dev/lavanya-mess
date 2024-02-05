@@ -2,7 +2,7 @@ const User = require('../../models/user')
 const asyncHandler = require('../../utils/asyncHandler')
 
 const searchUsers = asyncHandler(async (req, res) => {
-    const { name, gender, location, education, company, pageSize, pageNo } = req.query
+    const { name, gender, role, locationBetween, pageSize, pageNo } = req.query
 
     console.log(req.query)
 
@@ -16,27 +16,7 @@ const searchUsers = asyncHandler(async (req, res) => {
         }
     }
     if (gender) { filter.gender = gender }
-    if (location) {
-        filter.placesLived = {
-            $elemMatch: {
-                'location': { $regex: new RegExp(`\\b${location}\\b`, 'i') },
-            },
-        }
-    }
-    if (education) {
-        filter.education = {
-            $elemMatch: {
-                'organization': { $regex: new RegExp(`\\b${education}\\b`, 'i') },
-            },
-        }
-    }
-    if (company) {
-        filter.work = {
-            $elemMatch: {
-                'organization': { $regex: new RegExp(`\\b${company}\\b`, 'i') },
-            },
-        }
-    }
+    if (role) { filter.role = role }
 
     const limitValue = Number(pageSize) || 30
     const pageNumber = Number(pageNo || "0")
