@@ -1,4 +1,5 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const { LocationSchema } = require('./user');
 
 const SubscriptionSchema = new mongoose.Schema({
     createdBy: {
@@ -7,17 +8,14 @@ const SubscriptionSchema = new mongoose.Schema({
         required: true
     },
     plan: {
-        type: String,
-        enum: ['OneTimer', 'Simple', 'Premium', 'Gold', 'Platinum'],
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Plan',
         required: true
     },
-    amount: {
-        type: Number,
+    payment: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Payment',
         required: true
-    },
-    methodOfPayment: {
-        type: String,
-        enum: ['credit_card', 'debit_card', 'upi', 'wallet']
     },
     status: {
         type: String,
@@ -33,26 +31,12 @@ const SubscriptionSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
-    location: {
-        longitude: {
-            type: Number,
-            required: true
-        },
-        latitude: {
-            type: Number,
-            required: true
-        }
-    },
-    createdAt: {
-        type: Number,
-        required: true,
-        default: Date.now()
-    },
-    updatedAt: {
-        type: Number,
-        required: true
-    }
+    destination: LocationSchema
+}, {
+    timestamps: true,
 })
+
+SubscriptionSchema.index({ location: '2dsphere' });
 
 const Subscription = mongoose.models.Subscription || mongoose.model('Subscription', SubscriptionSchema)
 module.exports = Subscription

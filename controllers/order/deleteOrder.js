@@ -1,4 +1,4 @@
-const Order = require('../../models/payment')
+const Order = require('../../models/order')
 const asyncHandler = require('../../utils/asyncHandler')
 
 const deleteOrder = asyncHandler(async (req, res) => {
@@ -8,9 +8,9 @@ const deleteOrder = asyncHandler(async (req, res) => {
 
     return res.status(200).json({
         success: 'true',
-        message: 'Rated successfully',
+        message: 'order deleted successfully',
         deleteResponse: deletedOrder
     })
 })
 
-module.exports = deleteOrder
+module.exports = { deleteOrder }

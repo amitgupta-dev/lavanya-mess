@@ -8,9 +8,9 @@ const deleteProduct = asyncHandler(async (req, res) => {
 
     return res.status(200).json({
         success: 'true',
-        message: 'Rated successfully',
+        message: 'Product Deleted successfully',
         deleteResponse: deletedProduct
     })
 })
 
-module.exports = deleteProduct
+module.exports = { deleteProduct }

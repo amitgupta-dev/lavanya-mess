@@ -14,15 +14,9 @@ const NotificationSchema = new mongoose.Schema({
         type: String,
         enum: ['read', 'unread']
     },
-    createdAt: {
-        type: Number,
-        required: true,
-        default: Date.now()
-    },
-    updatedAt: {
-        type: Number,
-        required: true
-    }
+
+}, {
+    timestamps: true,
 })
 
 const Notification = mongoose.models.Notification || mongoose.model('Notification', NotificationSchema)

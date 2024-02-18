@@ -1,5 +1,26 @@
 const mongoose = require("mongoose")
 
+const LocationSchema = new mongoose.Schema({
+    isDefault: {
+        type: Boolean,
+        default: false
+    },
+    address: String,
+    landmark: String,
+    location: {
+        type: {
+            type: String,
+            default: 'Point'
+        },
+        coordinates: {
+            type: [Number],
+            required: true
+        }
+    }
+})
+
+
+
 const UserSchema = new mongoose.Schema({
     avatar: String,
     name: {
@@ -21,13 +42,9 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    address: [String],
-    location: {
-        type: { type: String, default: 'Point' },
-        coordinates: { type: [Number], required: true } // [longitude, latitude]
-    },
+    locations: [LocationSchema],
     role: {
-        type: Strnig,
+        type: String,
         enum: ['admin', 'manager', 'staff', 'user']
     },
 
@@ -48,8 +65,11 @@ const UserSchema = new mongoose.Schema({
     timestamps: true,
 })
 
-UserSchema.index({ location: '2dsphere' });
+UserSchema.index({ location: '2dsphere' })
 
 const User = mongoose.models.User || mongoose.model("User", UserSchema)
 
 module.exports = User
+
+module.exports.LocationSchema = LocationSchema
+

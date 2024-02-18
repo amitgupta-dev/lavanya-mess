@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const { LocationSchema } = require('./user')
 
 const OrderSchema = new mongoose.Schema({
     products: [{
@@ -26,28 +27,13 @@ const OrderSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    location: {
-        longitude: {
-            type: Number,
-            required: true
-        },
-        latitude: {
-            type: Number,
-            required: true
-        }
-    },
+    destination: LocationSchema,
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
-    createdAt: {
-        type: Number,
-        required: true,
-        default: Date.now()
-    },
-    updatedAt: {
-        type: Number
-    }
+}, {
+    timestamps: true,
 })
 
 const Order = mongoose.models.Order || mongoose.model('Order', OrderSchema)

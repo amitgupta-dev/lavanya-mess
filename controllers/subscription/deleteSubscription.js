@@ -13,4 +13,4 @@ const deleteSubscription = asyncHandler(async (req, res) => {
     })
 })
 
-module.exports = deleteSubscription
+module.exports = { deleteSubscription }

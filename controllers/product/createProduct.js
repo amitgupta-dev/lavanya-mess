@@ -5,30 +5,35 @@ const createProduct = asyncHandler(async (req, res) => {
     const {
         name,
         thumbnail,
-        images,
         description,
         price,
+        type,
         category,
-        tags,
-        rating
+        tags
     } = req.body
+
+    if (!(name && description && price && category)) return res.status(400).json({
+        success: false,
+        message: 'Please fill all the required fields',
+    })
 
     const newProduct = new Product({
         name,
         thumbnail,
-        images,
         description,
         price,
+        type,
         category,
-        tags,
-        rating,
+        tags: [...name.split(' '), ...tags],
         createdBy: req.user.id
     })
 
     const createdProduct = await newProduct.save()
     return res.status(200).json({
         success: 'true',
-        message: 'Product successful',
+        message: 'Product Created successfully',
         ProductDetails: createdProduct
     })
 })
+
+module.exports = { createProduct }

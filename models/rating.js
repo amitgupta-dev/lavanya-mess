@@ -14,16 +14,9 @@ const RatingSchema = new mongoose.Schema({
     rating: {
         type: Number,
         required: true
-    },
-    createdAt: {
-        type: Number,
-        required: true,
-        default: Date.now()
-    },
-    updatedAt: {
-        type: Number,
-        required: true
     }
+}, {
+    timestamps: true,
 })
 
 const Rating = mongoose.models.Rating || mongoose.model('Rating', RatingSchema)

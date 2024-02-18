@@ -4,26 +4,34 @@ const asyncHandler = require('../../utils/asyncHandler')
 const createSubscription = asyncHandler(async (req, res) => {
     const {
         plan,
-        methodOfPayment,
+        payment,
+        status,
         startDate,
         endDate,
-        location
+        destination
     } = req.body
 
+    if (!(plan && payment && status && startDate && endDate && destination)) return res.status(400).json({
+        success: false,
+        message: 'Please fill all the required fields',
+    })
+
     const newSubscription = new Subscription({
-        createdBy,
+        createdBy: req.user.id,
         plan,
-        amount,
-        methodOfPayment,
+        payment,
+        status,
         startDate,
         endDate,
-        location
+        destination
     })
 
     const createdSubscription = await newSubscription.save()
     return res.status(200).json({
         success: 'true',
-        message: 'Rated successfully',
+        message: 'Subricption created successfully',
         SubscriptionDetails: createdSubscription
     })
 })
+
+module.exports = { createSubscription }

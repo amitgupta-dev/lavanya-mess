@@ -1,6 +1,11 @@
 const mongoose = require('mongoose')
 
 const ProductSchema = new mongoose.Schema({
+    createdBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
     name: {
         type: String,
         required: true
@@ -9,30 +14,20 @@ const ProductSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    images: [
-        {
-            type: String,
-            required: true
-        }
-    ],
     description: {
-        type: String,
-        required: true
+        type: String
     },
     price: {
         type: Number,
         required: true,
     },
-    category: {
+    type: {
         type: String,
         enum: ['veg', 'non-veg'],
         required: true
     },
-    tags: [
-        {
-            type: String
-        }
-    ],
+    category: String,
+    tags: [String],
     rating: {
         count: {
             type: Number,
@@ -42,21 +37,9 @@ const ProductSchema = new mongoose.Schema({
         avg: {
             type: Number
         }
-    },
-    createdBy: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
-    },
-    createdAt: {
-        type: Number,
-        required: true,
-        default: Date.now()
-    },
-    updatedAt: {
-        type: Number,
-        required: true
     }
+}, {
+    timestamps: true,
 })
 
 const Product = mongoose.models.Product || mongoose.model('Product', ProductSchema)

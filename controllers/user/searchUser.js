@@ -25,11 +25,11 @@ const searchUsers = asyncHandler(async (req, res) => {
     const Users = await User.find(filter)
         .limit(limitValue)
         .skip(skipValue)
-    return res.json({
+    return res.status(200).json({
         success: true,
         message: "Users fetched successfully",
         Users
-    }).status(200)
+    })
 })
 
 module.exports = { searchUsers }

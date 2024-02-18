@@ -4,7 +4,7 @@ const PaymentSchema = new mongoose.Schema({
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
-        required: true
+        required: true,
     },
     amount: {
         type: Number,
@@ -20,15 +20,8 @@ const PaymentSchema = new mongoose.Schema({
         required: true,
         default: 'pending'
     },
-    createdAt: {
-        type: Number,
-        required: true,
-        default: Date.now()
-    },
-    updatedAt: {
-        type: Number,
-        required: true
-    }
+}, {
+    timestamps: true,
 })
 
 const Payment = mongoose.models.Payment || mongoose.model('Payment', PaymentSchema)

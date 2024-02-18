@@ -4,9 +4,14 @@ const jwt = require('jsonwebtoken')
 const asyncHandler = require('../../utils/asyncHandler')
 
 const signup = asyncHandler(async (req, res) => {
-    let { name, role, email, phone, password, dob, gender, acceptTAndC } = req.body
+    let { name, role, email, phone, password, dob, gender, locations } = req.body
 
     dob = new Date(dob).getTime()
+
+    if (!(name && role && email && phone && password)) return res.status(400).json({
+        success: false,
+        message: 'Please fill all the required fields',
+    })
 
     // check if user exists
     const user = await User.findOne({ email })
@@ -18,7 +23,6 @@ const signup = asyncHandler(async (req, res) => {
         })
     }
 
-    console.log("hello")
     const salt = await bcryptjs.genSalt(10)
     const hashedPassword = await bcryptjs.hash(password, salt)
 
@@ -31,11 +35,10 @@ const signup = asyncHandler(async (req, res) => {
         dob,
         gender,
         role,
-        acceptTAndC,
-        isAdmin: true,
-        createdAt: Date.now(),
-        updatedAt: Date.now()
+        locations,
+        isAdmin: true
     })
+    console.log(newUser.locations[0], locations[0])
 
     let createdUser = await newUser.save()
 
@@ -56,7 +59,6 @@ const signup = asyncHandler(async (req, res) => {
         path: '/',
         expires: new Date(Date.now() + 24 * 60 * 60 * 1000)
     })
-
     return res.json({
         success: true,
         message: "User created successfully",
