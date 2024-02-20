@@ -8,6 +8,8 @@ const signup = asyncHandler(async (req, res) => {
 
     dob = new Date(dob).getTime()
 
+    console.log(req.body)
+
     if (!(name && role && email && phone && password)) return res.status(400).json({
         success: false,
         message: 'Please fill all the required fields',

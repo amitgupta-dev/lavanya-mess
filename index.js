@@ -10,7 +10,7 @@ const app = express()
 // default middlewares
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
-app.use(cors({ credentials: true, origin: ['http://localhost:5173'] }))
+app.use(cors({ credentials: true, origin: '*' }))
 app.use(cookieParser())
 app.use(morgan('dev'))
 
@@ -26,6 +26,7 @@ const planRoutes = require('./routes/planRoutes')
 const paymentRoutes = require('./routes/paymentRoutes')
 const subscriptionRoutes = require('./routes/subscriptionRoutes')
 const orderRoutes = require('./routes/orderRoutes')
+const menuRoutes = require('./routes/menuRoutes')
 
 // routes
 app.get('/', (req, res) => { res.send("Welcome to the Lavanya Mess backend") })
@@ -36,5 +37,6 @@ app.use('/api/plan', verifyUser, planRoutes)
 app.use('/api/payment', verifyUser, paymentRoutes)
 app.use('/api/subscription', verifyUser, subscriptionRoutes)
 app.use('/api/order', verifyUser, orderRoutes)
+app.use('/api/menu', verifyUser, menuRoutes)
 
 connect(process.env.MONGO_URL, '5000', app)

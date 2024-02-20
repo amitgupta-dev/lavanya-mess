@@ -46,7 +46,7 @@ const login = asyncHandler(async (req, res) => {
     return res.json({
         success: true,
         message: "Login successful",
-        user: searchedUser
+        user: { ...searchedUser, token }
     })
 })
 

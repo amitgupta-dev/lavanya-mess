@@ -26,22 +26,11 @@ const PlanSchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
-    menu: [{
-        day: {
-            type: String,
-            enum: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-            required: true
-        },
-        breakfast: {
-            type: String
-        },
-        lunch: {
-            type: String
-        },
-        dinner: {
-            type: String
-        }
-    }]
+    menu: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Menu',
+        required: true
+    },
 }, {
     timestamps: true
 })

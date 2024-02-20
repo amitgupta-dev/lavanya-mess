@@ -1,15 +1,25 @@
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
 
-const verifyUser = (req, res, next) => {
-    const { token } = req.cookies
+const verifyUser = async (req, res, next) => {
+    let { token } = req.cookies
     if (!token) {
-        return res.json({ success: false, message: "Token not found" }).status(401)
-    }
-    jwt.verify(token, process.env.TOKEN_SECRET, (error, decoded) => {
-        if (error) return res.json({ success: false, message: error.message || "Invalid token" }).status(401)
-        req.user = decoded
-        next()
-    })
-}
+        const authHeader = req.headers['authorization'];
 
-module.exports = { verifyUser }
+        if (authHeader && authHeader.startsWith('Bearer ')) {
+            token = await authHeader.substring('Bearer '.length)c
+        } else {
+            return res.status(401).json({ success: false, message: "Token not found" });
+        }
+    }
+
+    jwt.verify(token, process.env.TOKEN_SECRET, (error, decoded) => {
+        if (error) {
+            return res.status(401).json({ success: false, message: error.message || "Invalid token" });
+        }
+        req.user = decoded;
+        console.log(decoded)
+        next();
+    });
+};
+
+module.exports = { verifyUser };

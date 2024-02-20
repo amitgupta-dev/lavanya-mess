@@ -1,5 +1,4 @@
 const Order = require('../../models/order')
-const bcryptjs = require('bcryptjs')
 const asyncHandler = require('../../utils/asyncHandler')
 
 const updateOrder = asyncHandler(async (req, res) => {

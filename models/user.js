@@ -45,7 +45,8 @@ const UserSchema = new mongoose.Schema({
     locations: [LocationSchema],
     role: {
         type: String,
-        enum: ['admin', 'manager', 'staff', 'user']
+        enum: ['admin', 'manager', 'staff', 'user'],
+        default: 'user'
     },
 
     isVerified: {
