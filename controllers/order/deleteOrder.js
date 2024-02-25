@@ -6,7 +6,7 @@ const deleteOrder = asyncHandler(async (req, res) => {
 
     const deletedOrder = await Order.findByIdAndDelete({ _id: id })
 
-    return res.status(200).json({
+    return res.status(204).json({
         success: 'true',
         message: 'order deleted successfully',
         deleteResponse: deletedOrder

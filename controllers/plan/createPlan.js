@@ -25,7 +25,7 @@ const createPlan = asyncHandler(async (req, res) => {
 
     console.log(createdPlan)
 
-    return res.json({
+    return res.status(201).json({
         success: true,
         message: "Plan created successfully",
         Plan: createdPlan

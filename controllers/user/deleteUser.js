@@ -8,7 +8,7 @@ const deleteUser = asyncHandler(async (req, res) => {
         success: true,
         message: "User deleted successfully",
         deleteResponse
-    }).status(200)
+    }).status(204)
 })
 
 module.exports = { deleteUser }

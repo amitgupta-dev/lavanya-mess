@@ -16,7 +16,7 @@ const createPayment = asyncHandler(async (req, res) => {
     })
 
     const createdPayment = await newPayment.save()
-    return res.status(200).json({
+    return res.status(201).json({
         success: 'true',
         message: 'Payment successful',
         PaymentDetails: createdPayment

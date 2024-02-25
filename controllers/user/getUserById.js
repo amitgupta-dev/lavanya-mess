@@ -1,8 +1,9 @@
 const User = require('../../models/user')
 const asyncHandler = require('../../utils/asyncHandler')
 
-const getUser = asyncHandler(async (req, res) => {
+const getUserById = asyncHandler(async (req, res) => {
     let { id } = req.params
+    console.log(id)
 
     // check if user exists
     const searchedUser = await User.findById({ _id: id })
@@ -25,4 +26,4 @@ const getUser = asyncHandler(async (req, res) => {
     })
 })
 
-module.exports = { getUser }
+module.exports = { getUserById }

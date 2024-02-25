@@ -6,7 +6,7 @@ const deleteRating = asyncHandler(async (req, res) => {
 
     const deletedRating = await Rating.findByIdAndDelete({ _id: id })
 
-    return res.status(200).json({
+    return res.status(204).json({
         success: 'true',
         message: 'Rated successfully',
         deleteResponse: deletedRating

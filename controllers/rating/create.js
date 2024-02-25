@@ -11,7 +11,7 @@ const createRating = asyncHandler(async (req, res) => {
     })
 
     const createdRating = await newRating.save()
-    return res.status(200).json({
+    return res.status(201).json({
         success: 'true',
         message: 'Rating successful',
         RatingDetails: createdRating

@@ -6,7 +6,7 @@ const verifyUser = async (req, res, next) => {
         const authHeader = req.headers['authorization'];
 
         if (authHeader && authHeader.startsWith('Bearer ')) {
-            token = await authHeader.substring('Bearer '.length)c
+            token = await authHeader.substring('Bearer '.length)
         } else {
             return res.status(401).json({ success: false, message: "Token not found" });
         }

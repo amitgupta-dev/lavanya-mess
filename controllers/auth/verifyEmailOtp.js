@@ -28,13 +28,13 @@ const verifyEmailOtp = asyncHandler(async (req, res) => {
             path: '/',
             expires: new Date(Date.now() + 10 * 60 * 1000)
         })
-        return res.status(200).json({
+        return res.status(201).json({
             success: true,
             message: "you can now change your password",
         })
     }
 
-    return res.status(200).json({
+    return res.status(400).json({
         success: false,
         message: "otp expired",
     })

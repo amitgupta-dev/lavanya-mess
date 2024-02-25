@@ -50,7 +50,7 @@ const changePassword = asyncHandler(async (req, res) => {
         }
         catch (err) {
             console.log(err)
-            return res.json({
+            return res.status(500).json({
                 success: false,
                 message: err.message || "something went wrong"
             })

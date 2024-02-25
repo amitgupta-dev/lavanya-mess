@@ -27,7 +27,7 @@ const createSubscription = asyncHandler(async (req, res) => {
     })
 
     const createdSubscription = await newSubscription.save()
-    return res.status(200).json({
+    return res.status(201).json({
         success: 'true',
         message: 'Subricption created successfully',
         SubscriptionDetails: createdSubscription

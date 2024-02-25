@@ -6,7 +6,7 @@ const deleteProduct = asyncHandler(async (req, res) => {
 
     const deletedProduct = await Product.findByIdAndDelete({ _id: id })
 
-    return res.status(200).json({
+    return res.status(204).json({
         success: 'true',
         message: 'Product Deleted successfully',
         deleteResponse: deletedProduct

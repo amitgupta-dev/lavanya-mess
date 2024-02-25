@@ -22,7 +22,7 @@ const forgotPassword = asyncHandler(async (req, res) => {
 
     await searchedUser.save()
 
-    return res.status(200).json({
+    return res.status(201).json({
         success: true,
         message: "a code has been sent to your email",
     })

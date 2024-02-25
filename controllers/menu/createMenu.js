@@ -14,7 +14,7 @@ const createMenu = asyncHandler(async (req, res) => {
     })
 
     const createdMenu = await newMenu.save()
-    return res.status(200).json({
+    return res.status(201).json({
         success: 'true',
         message: 'Menu created successfully',
         MenuDetails: createdMenu

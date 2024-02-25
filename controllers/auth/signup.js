@@ -10,7 +10,7 @@ const signup = asyncHandler(async (req, res) => {
 
     console.log(req.body)
 
-    if (!(name && role && email && phone && password)) return res.status(400).json({
+    if (!(name && email && phone && gender && password)) return res.status(400).json({
         success: false,
         message: 'Please fill all the required fields',
     })
@@ -19,7 +19,7 @@ const signup = asyncHandler(async (req, res) => {
     const user = await User.findOne({ email })
 
     if (user) {
-        return res.json({
+        return res.status(409).json({
             success: false,
             message: "user already exists"
         })
@@ -61,7 +61,7 @@ const signup = asyncHandler(async (req, res) => {
         path: '/',
         expires: new Date(Date.now() + 24 * 60 * 60 * 1000)
     })
-    return res.json({
+    return res.status(201).json({
         success: true,
         message: "User created successfully",
         user: createdUser

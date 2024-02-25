@@ -18,7 +18,7 @@ const createOrder = asyncHandler(async (req, res) => {
     })
 
     const createdOrder = await newOrder.save()
-    return res.status(200).json({
+    return res.status(201).json({
         success: 'true',
         message: 'order successful',
         orderDetails: createdOrder

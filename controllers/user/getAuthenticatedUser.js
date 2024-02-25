@@ -19,7 +19,7 @@ const getAuthenticatedUser = asyncHandler(async (req, res) => {
 
     searchedUser.password = undefined
 
-    return res.status(201).json({
+    return res.status(200).json({
         success: true,
         message: "User fetched successfully",
         user: searchedUser

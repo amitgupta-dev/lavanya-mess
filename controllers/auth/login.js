@@ -6,11 +6,18 @@ const asyncHandler = require('../../utils/asyncHandler')
 const login = asyncHandler(async (req, res) => {
     const { email, password } = req.body
 
+    console.log(req.body)
+
+    if (!(email && password)) return res.status(400).json({
+        success: false,
+        message: 'Please fill all the required fields',
+    })
+
     //if user exists
     const searchedUser = await User.findOne({ email })
 
     if (!searchedUser) {
-        return res.json({
+        return res.status(404).json({
             success: false,
             message: "user not found"
         })
@@ -43,7 +50,7 @@ const login = asyncHandler(async (req, res) => {
         expires: new Date(Date.now() + 24 * 60 * 60 * 1000)
     })
 
-    return res.json({
+    return res.status(201).json({
         success: true,
         message: "Login successful",
         user: { ...searchedUser, token }

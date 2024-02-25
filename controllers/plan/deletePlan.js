@@ -6,7 +6,7 @@ const deletePlan = asyncHandler(async (req, res) => {
 
     const deletedPlan = await Plan.findByIdAndDelete({ _id: id })
 
-    return res.status(200).json({
+    return res.status(204).json({
         success: 'true',
         message: 'Plan Deleted successfully',
         deleteResponse: deletedPlan
