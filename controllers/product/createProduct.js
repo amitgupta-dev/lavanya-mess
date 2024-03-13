@@ -12,7 +12,7 @@ const createProduct = asyncHandler(async (req, res) => {
         tags
     } = req.body
 
-    if (!(name && description && price && category)) return res.status(400).json({
+    if (!(name && description && thumbnail && price && type)) return res.status(400).json({
         success: false,
         message: 'Please fill all the required fields',
     })
@@ -24,9 +24,12 @@ const createProduct = asyncHandler(async (req, res) => {
         price,
         type,
         category,
-        tags: [...name.split(' '), ...tags],
+        tags: [...name.split(' ')],
         createdBy: req.user.id
     })
+    if (tags) {
+        newProduct.tags = [...newProduct.tags, ...tags]
+    }
 
     const createdProduct = await newProduct.save()
     return res.status(201).json({

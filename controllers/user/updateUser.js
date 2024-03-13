@@ -12,6 +12,7 @@ const updateUser = asyncHandler(async (req, res) => {
         password,
         locations } = req.body
 
+    console.log(req.body)
     let searchedUser = await User.findById(req.user.id)
 
     if (!searchedUser) return res.status(404).json({

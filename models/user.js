@@ -5,6 +5,16 @@ const LocationSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    receiver: {
+        name: {
+            type: String,
+            required: true
+        },
+        phone: {
+            type: Number,
+            required: true
+        },
+    },
     address: String,
     landmark: String,
     location: {

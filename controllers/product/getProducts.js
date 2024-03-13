@@ -13,7 +13,7 @@ const getProducts = asyncHandler(async (req, res) => {
             product: searchedProduct
         })
     }
-    const { name, type, category, tags, ratingLessThan, ratingMoreThan, priceLessThan, priceMoreThan, pageSize, pageNo } = req.query
+    const { name, type, category, sortBy, sortOrder, tags, ratingLessThan, ratingMoreThan, priceLessThan, priceMoreThan, pageSize, pageNo } = req.query
     let filter = {}
     if (name) {
         filter.name = { $regex: new RegExp(name, 'i') }
@@ -25,7 +25,8 @@ const getProducts = asyncHandler(async (req, res) => {
         filter.category = { $in: category }
     }
     if (tags) {
-        filter.tags = { $in: tags }
+        const queryTags = tags.split(' ')
+        filter.tags = { $in: queryTags.map(tag => new RegExp(tag, "i")) }
     }
     if (ratingLessThan) {
         filter.rating = { $lte: ratingLessThan }
@@ -46,9 +47,16 @@ const getProducts = asyncHandler(async (req, res) => {
     const pageNumber = Number(pageNo || "0")
     const skipValue = pageNumber === 0 ? 0 : limitValue * (pageNumber - 1)
 
+
     const searchedProducts = await Product.find(filter)
         .limit(limitValue)
         .skip(skipValue)
+
+    if (sortBy && sortOrder && (sortBy === 'price' || sortBy === 'rating') && (sortOrder === 'asc' || sortOrder === 'desc')) {
+        searchedProducts.sort({ [`${sortBy}`]: (sortOrder === 'asc' ? 1 : -1) })
+            .exec();
+    }
+    console.log(searchedProducts)
     return res.status(200).json({
         success: true,
         message: "Products fetched successfully",
