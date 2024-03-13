@@ -27,9 +27,11 @@ const paymentRoutes = require('./routes/paymentRoutes')
 const subscriptionRoutes = require('./routes/subscriptionRoutes')
 const orderRoutes = require('./routes/orderRoutes')
 const menuRoutes = require('./routes/menuRoutes')
+const { proxyRequests } = require('./controllers/proxy_requests/proxyRequests')
 
 // routes
 app.get('/', (req, res) => { res.send("Welcome to the Lavanya Mess backend") })
+app.post('/api/proxyRequest', proxyRequests)
 app.use('/api/auth', authRoutes)
 app.use('/api/user', verifyUser, userRoutes)
 app.use('/api/product', verifyUser, productRoutes)
