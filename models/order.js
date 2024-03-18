@@ -16,11 +16,12 @@ const OrderSchema = new mongoose.Schema({
     }],
     status: {
         type: String,
-        enum: ['pending', 'delivered', 'cancelled'],
+        enum: ['pending', 'delivered', 'cancelled', 'payment failed'],
         default: 'pending'
     },
     payment: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Payment',
         required: true
     },
     totalPrice: {

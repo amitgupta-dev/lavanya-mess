@@ -2,7 +2,7 @@ const Order = require('../../models/order')
 const asyncHandler = require('../../utils/asyncHandler')
 
 const createOrder = asyncHandler(async (req, res) => {
-    const { products, totalPrice, payment, destination } = req.body
+    const { status, products, totalPrice, payment, destination } = req.body
 
     if (!(products && totalPrice && payment && destination)) return res.status(400).json({
         success: false,
@@ -19,8 +19,8 @@ const createOrder = asyncHandler(async (req, res) => {
 
     const createdOrder = await newOrder.save()
     return res.status(201).json({
-        success: 'true',
-        message: 'order successful',
+        success: status === 'placed' ? 'true' : 'false',
+        message: `order ${status}`,
         orderDetails: createdOrder
     })
 })

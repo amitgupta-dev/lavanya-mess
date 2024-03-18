@@ -14,6 +14,7 @@ const updatePlan = asyncHandler(async (req, res) => {
 
     if (name) searchedPlan.name = name
     if (thumbnail) searchedPlan.thumbnail = thumbnail
+    if (banner) searchedPlan.banner = banner
     if (price) searchedPlan.price = price
     if (meals) {
         searchedPlan.meals = meals

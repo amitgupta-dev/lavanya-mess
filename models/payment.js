@@ -20,6 +20,15 @@ const PaymentSchema = new mongoose.Schema({
         required: true,
         default: 'pending'
     },
+    txnId: {
+        type: String,
+    },
+    txnRef: {
+        type: String,
+    },
+    approvalRef: {
+        type: String,
+    },
 }, {
     timestamps: true,
 })

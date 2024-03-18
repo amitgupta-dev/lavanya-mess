@@ -8,6 +8,10 @@ const PlanSchema = new mongoose.Schema({
     thumbnail: {
         type: String,
     },
+    banner: {
+        type: String,
+        required: true,
+    },
     price: {
         type: Number,
         required: true

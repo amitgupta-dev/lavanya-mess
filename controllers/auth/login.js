@@ -35,7 +35,9 @@ const login = asyncHandler(async (req, res) => {
 
     const payload = {
         id: searchedUser._id,
+        ...searchedUser,
     }
+    payload._id = undefined
 
     const token = jwt.sign(payload, process.env.TOKEN_SECRET, { expiresIn: "1d" })
 

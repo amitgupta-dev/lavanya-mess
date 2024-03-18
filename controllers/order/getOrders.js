@@ -4,6 +4,7 @@ const asyncHandler = require('../../utils/asyncHandler')
 const getOrders = asyncHandler(async (req, res) => {
     const { id } = req.params
 
+
     if (id) {
         const searchedOrder = await Order.findById({ _id: id })
 
@@ -17,7 +18,7 @@ const getOrders = asyncHandler(async (req, res) => {
         return res.status(200).json({
             success: 'true',
             message: 'Order Fetched successfully',
-            Order: searchedOrder
+            order: searchedOrder
         })
     }
 
@@ -25,7 +26,9 @@ const getOrders = asyncHandler(async (req, res) => {
 
     let filter = {}
 
-    if (createdBy) { filter.createdBy = createdBy }
+    // if (createdBy && req.user.role != 'user') { filter.createdBy = createdBy }
+    // else { filter.createdBy = id }
+
     if (payment) { filter.payment = payment }
 
     const limitValue = Number(pageSize) || 30
@@ -33,13 +36,16 @@ const getOrders = asyncHandler(async (req, res) => {
     const skipValue = pageNumber === 0 ? 0 : limitValue * (pageNumber - 1)
 
     const searchedOrders = await Order.find(filter)
+        .populate('products.product')
+        .sort({ createdAt: -1 })
         .limit(limitValue)
         .skip(skipValue)
 
+    console.log('yourOrders', searchedOrders)
     return res.status(200).json({
         success: true,
         message: "Orders fetched successfully",
-        Orders: searchedOrders
+        orders: searchedOrders
     })
 })
 

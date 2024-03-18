@@ -4,9 +4,9 @@ const jwt = require('jsonwebtoken')
 const asyncHandler = require('../../utils/asyncHandler')
 
 const createPlan = asyncHandler(async (req, res) => {
-    let { name, thumbnail, price, meals, menu } = req.body
+    let { name, thumbnail, banner, price, meals, menu } = req.body
 
-    if (!(name && price && meals && menu)) return res.status(400).json({
+    if (!(name && price && meals && menu && banner)) return res.status(400).json({
         success: false,
         message: 'Please fill all the required fields',
     })
@@ -15,6 +15,7 @@ const createPlan = asyncHandler(async (req, res) => {
         createdBy: req.user.id,
         name,
         thumbnail,
+        banner,
         price,
         timesADay: meals.length,
         meals,
