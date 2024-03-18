@@ -17,6 +17,8 @@ const createOrder = asyncHandler(async (req, res) => {
         destination
     })
 
+    if (status) { newOrder.status = status }
+
     const createdOrder = await newOrder.save()
     return res.status(201).json({
         success: status === 'placed' ? 'true' : 'false',
