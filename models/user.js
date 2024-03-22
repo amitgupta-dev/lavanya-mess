@@ -7,12 +7,10 @@ const LocationSchema = new mongoose.Schema({
     },
     receiver: {
         name: {
-            type: String,
-            required: true
+            type: String
         },
         phone: {
             type: Number,
-            required: true
         },
     },
     address: String,
@@ -35,27 +33,37 @@ const UserSchema = new mongoose.Schema({
     avatar: String,
     name: {
         type: String,
-        required: true
+        required: [true, 'name is required']
     },
     email: {
         type: String,
-        required: true,
-        unique: true
+        required: [true, 'email is required'],
+        unique: true,
     },
-    phone: Number,
-    dob: Number,
+    phone: {
+        type: Number,
+        unique: true,
+    },
+    dob: Date,
     gender: {
         type: String,
-        enum: ["Male", "Female", "Others"]
+        required: [true, 'gender is required'],
+        enum: {
+            values: ["Male", "Female", "Others"],
+            message: "please choose a gender among 'Male', 'Female' or 'Others'"
+        },
     },
     password: {
         type: String,
-        required: true,
+        required: [true, 'password is required'],
     },
     locations: [LocationSchema],
     role: {
         type: String,
-        enum: ['admin', 'manager', 'staff', 'user'],
+        enum: {
+            values: ['admin', 'manager', 'staff', 'user'],
+            message: "please choose a gender among 'admin', 'manager', 'staff' or 'user'"
+        },
         default: 'user'
     },
 

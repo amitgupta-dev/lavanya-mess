@@ -9,6 +9,7 @@ const updateUser = asyncHandler(async (req, res) => {
         email,
         phone,
         gender,
+        dob,
         password,
         locations } = req.body
 
@@ -23,8 +24,9 @@ const updateUser = asyncHandler(async (req, res) => {
     if (avatar) searchedUser.avatar = avatar
     if (name) searchedUser.name = name
     if (email) searchedUser.email = email
-    if (phone) searchedUser.phone = phone
+    if (phone) searchedUser.phone = Number(phone)
     if (gender) searchedUser.gender = gender
+    if (dob) searchedUser.dob = dob
 
     if (password) {
         const salt = await bcryptjs.genSalt(10)

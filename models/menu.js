@@ -1,9 +1,18 @@
 const mongoose = require('mongoose')
 
 const DayRoutineSchema = new mongoose.Schema({
-    breakfast: String,
-    lunch: String,
-    dinner: String
+    breakfast: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Product'
+    },
+    lunch: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Product'
+    },
+    dinner: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Product'
+    }
 })
 
 const MenuSchema = new mongoose.Schema({

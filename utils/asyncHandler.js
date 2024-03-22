@@ -1,16 +1,6 @@
 const asyncHandler = (controller) => {
-    return (req, res, next) => {
-        try {
-            controller(req, res, next)
-        }
-        catch (err) {
-            console.log(err)
-            return res.json({
-                success: false,
-                message: err.message || "something went wrong"
-            })
-        }
-    }
+    return (req, res, next) =>
+        controller(req, res, next).catch(err => next(err))
 }
 
 module.exports = asyncHandler

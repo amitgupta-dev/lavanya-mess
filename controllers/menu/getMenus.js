@@ -6,8 +6,11 @@ const getMenus = asyncHandler(async (req, res) => {
 
     console.log(req.params)
 
+    const fields = 'Monday.breakfast Monday.lunch Monday.dinner Tuesday.breakfast Tuesday.lunch Tuesday.dinner Wednesday.breakfast Wednesday.lunch Wednesday.dinner Thursday.breakfast Thursday.lunch Thursday.dinner Friday.breakfast Friday.lunch Friday.dinner Saturday.breakfast Saturday.lunch Saturday.dinner Sunday.breakfast Sunday.lunch Sunday.dinner'
+
     if (id) {
         const searchedMenu = await Menu.findById({ _id: id })
+            .populate(fields)
 
         if (!searchedMenu) {
             return res.status(404).json({
@@ -30,6 +33,7 @@ const getMenus = asyncHandler(async (req, res) => {
     const skipValue = pageNumber === 0 ? 0 : limitValue * (pageNumber - 1)
 
     const searchedMenus = await Menu.find()
+        .populate(fields)
         .limit(limitValue)
         .skip(skipValue)
 

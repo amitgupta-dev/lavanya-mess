@@ -22,13 +22,14 @@ const getOrders = asyncHandler(async (req, res) => {
         })
     }
 
-    const { createdBy, payment, pageSize, pageNo } = req.query
+    const { createdBy, status, payment, pageSize, pageNo } = req.query
 
     let filter = {}
 
-    // if (createdBy && req.user.role != 'user') { filter.createdBy = createdBy }
-    // else { filter.createdBy = id }
+    if (createdBy && req.user.role != 'user') { filter.createdBy = createdBy }
+    else { filter.createdBy = req.user.id }
 
+    if (status) { filter.status = status }
     if (payment) { filter.payment = payment }
 
     const limitValue = Number(pageSize) || 30

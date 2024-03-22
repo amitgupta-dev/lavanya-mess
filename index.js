@@ -28,6 +28,9 @@ const subscriptionRoutes = require('./routes/subscriptionRoutes')
 const orderRoutes = require('./routes/orderRoutes')
 const menuRoutes = require('./routes/menuRoutes')
 const { proxyRequests } = require('./controllers/proxy_requests/proxyRequests')
+const CustomError = require('./utils/customError')
+const asyncHandler = require('./utils/asyncHandler')
+const globalErrorHandler = require('./controllers/error/globalErrorHandler')
 
 // routes
 app.get('/', (req, res) => { res.send("Welcome to the Lavanya Mess backend") })
@@ -40,5 +43,10 @@ app.use('/api/payment', verifyUser, paymentRoutes)
 app.use('/api/subscription', verifyUser, subscriptionRoutes)
 app.use('/api/order', verifyUser, orderRoutes)
 app.use('/api/menu', verifyUser, menuRoutes)
+app.all('*', (req, res, next) => {
+    const error = new CustomError(`the route ${req.originalUrl} not found`, 404)
+    next(error)
+})
 
+app.use(globalErrorHandler)
 connect(process.env.MONGO_URL, '5000', app)

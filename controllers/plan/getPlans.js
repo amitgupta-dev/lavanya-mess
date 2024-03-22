@@ -13,7 +13,7 @@ const getPlans = asyncHandler(async (req, res) => {
             plan: searchedPlan
         })
     }
-    const { name, pageSize, pageNo } = req.query
+    const { name, priceLessThan, priceMoreThan, pageSize, pageNo } = req.query
     let filter = {}
     if (name) {
         filter.name = { $regex: new RegExp(name, 'i') }

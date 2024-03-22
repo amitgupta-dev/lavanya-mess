@@ -14,7 +14,7 @@ const getProducts = asyncHandler(async (req, res) => {
         })
     }
     const { name, type, category, sortBy, sortOrder, tags, ratingLessThan, ratingMoreThan, priceLessThan, priceMoreThan, pageSize, pageNo } = req.query
-    let filter = {}
+    filter = {}
     if (name) {
         filter.name = { $regex: new RegExp(name, 'i') }
     }
@@ -48,14 +48,14 @@ const getProducts = asyncHandler(async (req, res) => {
     const skipValue = pageNumber === 0 ? 0 : limitValue * (pageNumber - 1)
 
 
-    const searchedProducts = await Product.find(filter)
+    const query = Product.find(filter)
         .limit(limitValue)
         .skip(skipValue)
 
     if (sortBy && sortOrder && (sortBy === 'price' || sortBy === 'rating') && (sortOrder === 'asc' || sortOrder === 'desc')) {
-        searchedProducts.sort({ [`${sortBy}`]: (sortOrder === 'asc' ? 1 : -1) })
-            .exec();
+        query.sort({ [sortBy]: (sortOrder === 'asc' ? 1 : -1) })
     }
+    const searchedProducts = await query;
     console.log(searchedProducts)
     return res.status(200).json({
         success: true,

@@ -33,15 +33,20 @@ const login = asyncHandler(async (req, res) => {
         })
     }
 
-    const payload = {
+    const payload = searchedUser._doc ? {
+        id: searchedUser._doc._id,
+        ...searchedUser._doc,
+        _id: undefined
+    } : {
         id: searchedUser._id,
         ...searchedUser,
+        _id: undefined
     }
-    payload._id = undefined
+    delete (payload._id)
 
     const token = jwt.sign(payload, process.env.TOKEN_SECRET, { expiresIn: "1d" })
 
-    searchedUser.password = undefined
+    delete (payload.password)
 
     res.cookie("token", token, {
         httpOnly: true,
@@ -55,7 +60,7 @@ const login = asyncHandler(async (req, res) => {
     return res.status(201).json({
         success: true,
         message: "Login successful",
-        user: { ...searchedUser, token }
+        user: { ...payload, token }
     })
 })
 

@@ -17,7 +17,6 @@ const verifyUser = async (req, res, next) => {
             return res.status(401).json({ success: false, message: error.message || "Invalid token" });
         }
         req.user = decoded;
-        console.log(decoded)
         next();
     });
 };
