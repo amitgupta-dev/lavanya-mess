@@ -33,7 +33,13 @@ const updateUser = asyncHandler(async (req, res) => {
         const hashedPassword = await bcryptjs.hash(password, salt)
         searchedUser.password = hashedPassword
     }
-    if (locations) searchedUser.locations = locations
+
+    if (locations) {
+        if (searchedUser.locations && !searchedUser.locations.some(location => location.isDefault === true)) {
+            locations[0].isDefault = true
+        }
+        searchedUser.locations = locations
+    }
 
     let updatedUser = await searchedUser.save()
 
