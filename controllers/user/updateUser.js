@@ -1,6 +1,7 @@
 const User = require('../../models/user')
 const bcryptjs = require('bcryptjs')
 const asyncHandler = require('../../utils/asyncHandler')
+const cloudinary = require('../../configs/cloudinary')
 
 const updateUser = asyncHandler(async (req, res) => {
     const {
@@ -13,7 +14,7 @@ const updateUser = asyncHandler(async (req, res) => {
         password,
         locations } = req.body
 
-    console.log(req.body)
+
     let searchedUser = await User.findById(req.user.id)
 
     if (!searchedUser) return res.status(404).json({
@@ -21,7 +22,25 @@ const updateUser = asyncHandler(async (req, res) => {
         message: 'User not found'
     })
 
-    if (avatar) searchedUser.avatar = avatar
+    if (avatar) {
+
+        const parts = searchedUser.avatar.split('/');
+
+        const public_id = parts
+            .slice(parts.indexOf('upload') + 2, parts.length)
+            .join('/')
+            .split('.')[0]
+
+        console.log('public_id: ', public_id)
+        if (!public_id.includes('rci8vyzrxdrh6mnjnrsk') &&
+            !public_id.includes('ml2mskhzrkki03s4th6m')) {
+
+            cloudinary.uploader.destroy(public_id).then((response) => {
+                console.log(response)
+            })
+        }
+        searchedUser.avatar = avatar
+    }
     if (name) searchedUser.name = name
     if (email) searchedUser.email = email
     if (phone) searchedUser.phone = Number(phone)
@@ -45,7 +64,7 @@ const updateUser = asyncHandler(async (req, res) => {
 
     updatedUser.password = undefined
 
-    console.log(updatedUser)
+
 
     return res.status(200).json({
         success: true,
