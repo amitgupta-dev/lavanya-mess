@@ -32,7 +32,7 @@ const updateUser = asyncHandler(async (req, res) => {
             .split('.')[0]
 
         console.log('public_id: ', public_id)
-        if (!public_id.includes('rci8vyzrxdrh6mnjnrsk') &&
+        if (avatar !== searchedUser.avatar && !public_id.includes('rci8vyzrxdrh6mnjnrsk') &&
             !public_id.includes('ml2mskhzrkki03s4th6m')) {
 
             cloudinary.uploader.destroy(public_id).then((response) => {
